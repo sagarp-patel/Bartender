@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Smart Bartender</string>
+    <color name="background_color_blue">#0000ff</color>
+</resources>
