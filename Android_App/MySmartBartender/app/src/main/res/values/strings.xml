@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Smart Bartender</string>
-    <string name="btn_make_text">Make Drink</string>
+    <string name="btn_make_text">Pour Drink</string>
 </resources>
