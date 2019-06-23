@@ -7,6 +7,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:gravity="center"
+        android:background="@color/DarkGray"
         tools:context=".MainActivity">
 
     <TextView android:layout_width="wrap_content"
@@ -18,6 +19,7 @@
               app:layout_constraintLeft_toRightOf="parent"
               app:layout_constraintRight_toLeftOf="parent"
               android:paddingBottom="15dp"
+              android:textColor="@color/White"
     />
     <LinearLayout android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
@@ -40,15 +42,18 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_gravity="center_vertical"
+                android:textColor="@color/White"
+                android:background="@color/Gray"
                 android:padding="5dp"
                 android:textSize="20dp"
                 android:text="@string/btn_make_text"
                 android:id="@+id/make_drink_btn"
-                android:onClick="make_Drink"/>
+                android:onClick="pour_Drink"/>
     </LinearLayout>
 
     <TextView android:layout_width="wrap_content"
               android:layout_height="wrap_content"
+              android:textColor="@color/White"
               android:text="Status: "
               android:gravity="center"
               android:layout_below="@id/core_layout"
@@ -61,6 +66,18 @@
     />
 
     <android.support.design.widget.FloatingActionButton
+            android:id="@+id/pump_config_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_device_hub_black_24dp"
+            app:backgroundTint="@null"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+    />
+
+    <android.support.design.widget.FloatingActionButton
             android:id="@+id/options_Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -68,9 +85,8 @@
             android:layout_margin="16dp"
             android:src="@drawable/ic_device_hub_black_24dp"
             app:backgroundTint="@null"
-            app:layout_constraintTop_toBottomOf="@id/Status_TextView"
-            app:layout_constraintLeft_toRightOf="parent"
-            app:layout_constraintRight_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             />
 
 </android.support.constraint.ConstraintLayout>
