@@ -7,19 +7,40 @@ import android.view.View
 
 class MainActivity : AppCompatActivity() {
 
+    lateinit var fab:View
+    lateinit var pump_config_fab:View
+    lateinit var add_drink_fab:View
+    var isMenuOpen:Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        val fab: View = findViewById(R.id.options_Button)
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-                .setAction("Action", null)
-                .show()
-        }
+        pump_config_fab = findViewById(R.id.pump_config_button)
+        fab = findViewById(R.id.options_Button)
+        add_drink_fab = findViewById(R.id.add_drink_button)
+        //openMenu()
+        closeMenu()
     }
 
+    fun fab_onClick(view:View){
+        if(isMenuOpen){
+            closeMenu()
+            isMenuOpen = false
+        }else{
+            openMenu()
+            isMenuOpen = true
+        }
 
+    }
+
+    fun openMenu(){
+        pump_config_fab.animate().translationY(-getResources().getDimension(R.dimen.up_55))
+        add_drink_fab.animate().translationY(-getResources().getDimension(R.dimen.up_105))
+    }
+
+    fun closeMenu(){
+        pump_config_fab.animate().translationY(getResources().getDimension(R.dimen.up_105))
+        add_drink_fab.animate().translationY(getResources().getDimension(R.dimen.up_105))
+    }
 
     // Make Drink Function. Sends a signal to the RPi to make a drink selected from the spinner object
     fun pour_Drink(view: View) {
