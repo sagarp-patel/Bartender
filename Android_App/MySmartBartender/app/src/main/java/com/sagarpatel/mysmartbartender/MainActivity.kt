@@ -10,6 +10,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var fab:View
     lateinit var pump_config_fab:View
     lateinit var add_drink_fab:View
+    lateinit var info_about_fab:View
     var isMenuOpen:Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,6 +18,7 @@ class MainActivity : AppCompatActivity() {
         pump_config_fab = findViewById(R.id.pump_config_button)
         fab = findViewById(R.id.options_Button)
         add_drink_fab = findViewById(R.id.add_drink_button)
+        info_about_fab = findViewById(R.id.info_button)
         //openMenu()
         closeMenu()
     }
@@ -33,13 +35,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun openMenu(){
-        pump_config_fab.animate().translationY(-getResources().getDimension(R.dimen.up_55))
-        add_drink_fab.animate().translationY(-getResources().getDimension(R.dimen.up_105))
+        info_about_fab.animate().translationY(-getResources().getDimension(R.dimen.up_55))
+        pump_config_fab.animate().translationY(-getResources().getDimension(R.dimen.up_105))
+        add_drink_fab.animate().translationY(-getResources().getDimension(R.dimen.up_155))
     }
 
     fun closeMenu(){
+        info_about_fab.animate().translationY(getResources().getDimension(R.dimen.up_55))
         pump_config_fab.animate().translationY(getResources().getDimension(R.dimen.up_105))
-        add_drink_fab.animate().translationY(getResources().getDimension(R.dimen.up_105))
+        add_drink_fab.animate().translationY(getResources().getDimension(R.dimen.up_155))
     }
 
     // Make Drink Function. Sends a signal to the RPi to make a drink selected from the spinner object
@@ -50,7 +54,6 @@ class MainActivity : AppCompatActivity() {
         Snackbar.make(view, "Function is still in development", Snackbar.LENGTH_LONG)
             .setAction("Action", null)
             .show()
-
     }
 
 }

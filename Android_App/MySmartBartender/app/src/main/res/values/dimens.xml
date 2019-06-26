@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="up_55">55dp</dimen>
-    <dimen name="up_105">110dp</dimen>
-    <dimen name="up_155">155dp</dimen>
+    <dimen name="up_55">60dp</dimen>
+    <dimen name="up_105">120dp</dimen>
+    <dimen name="up_155">180dp</dimen>
 </resources>
