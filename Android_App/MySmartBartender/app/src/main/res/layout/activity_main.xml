@@ -37,7 +37,10 @@
              android:layout_height="wrap_content"
              android:gravity="center"
              android:layout_gravity="center_vertical"
-             android:padding="5dp">
+             android:padding="5dp"
+             android:id="@+id/drink_menu_spinner"
+             android:textColor="@color/White"
+    >
 
     </Spinner>
 
@@ -67,6 +70,16 @@
               app:layout_constraintRight_toLeftOf="parent"
               android:textSize="30dp"
     />
+
+    <fragment
+
+              class="com.sagarpatel.mysmartbartender.Add_Drink"
+              android:id="@+id/fragment_container"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:layout_constraintTop_toBottomOf="@id/Status_TextView"
+              app:layout_constraintRight_toLeftOf="@id/Status_TextView"
+              />
 
     <android.support.design.widget.FloatingActionButton
             android:id="@+id/info_button"
@@ -99,6 +112,7 @@
             android:layout_gravity="end|bottom"
             android:src="@drawable/ic_add_black_24dp"
             android:scaleType="center"
+            android:onClick="add_Drink"
             app:backgroundTint="@null"
             app:maxImageSize="58dp"
             app:fabCustomSize="56dp"
