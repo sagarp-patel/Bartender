@@ -1,5 +1,6 @@
 package com.sagarpatel.mysmartbartender
 
+import android.app.PendingIntent.getActivity
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -14,18 +15,31 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    // Variables
+    //(FAB is Floating Action Button)
+    //Floating Action Buttons to Change Fragments
     lateinit var fab:View
     lateinit var pump_config_fab:View
     lateinit var add_drink_fab:View
     lateinit var info_about_fab:View
+    var isMenuOpen:Boolean = false // Track FAB menu if open or close
+    // Drink Menu Variables
     lateinit var drink_menu:Spinner
     lateinit var menu_adapter:ArrayAdapter<CharSequence>
     lateinit var menu_array_list:ArrayList<CharSequence>
-    var isMenuOpen:Boolean = false
+    // Fragments
+    lateinit var add_drink_frag:Add_Drink
+    lateinit var pump_config_frag:Pump_Config
+    //Fragment Variables
+    lateinit var fragmentManager: FragmentManager
+    lateinit var fragmentTransaction: FragmentTransaction
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // Initializing variables
         pump_config_fab = findViewById(R.id.pump_config_button)
         fab = findViewById(R.id.options_Button)
         add_drink_fab = findViewById(R.id.add_drink_button)
@@ -35,11 +49,14 @@ class MainActivity : AppCompatActivity() {
         menu_array_list.add("No Drinks")
         menu_adapter = ArrayAdapter<CharSequence>(this,android.R.layout.simple_spinner_dropdown_item,menu_array_list)
         drink_menu.adapter = menu_adapter
+        pump_config_frag = Pump_Config()
+        add_drink_frag = Add_Drink()
+        fragmentManager = getSupportFragmentManager()
 
-        //openMenu()
         closeMenu()
     }
 
+    // Using this function open or close the FAB menu
     fun fab_onClick(view:View){
         if(isMenuOpen){
             closeMenu()
@@ -50,12 +67,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //Open the FAB menu
     fun openMenu(){
         info_about_fab.animate().translationY(-getResources().getDimension(R.dimen.up_55))
         pump_config_fab.animate().translationY(-getResources().getDimension(R.dimen.up_105))
         add_drink_fab.animate().translationY(-getResources().getDimension(R.dimen.up_155))
     }
 
+    // Close the FAB menu (FAB is Floating Action Button)
     fun closeMenu(){
         info_about_fab.animate().translationY(getResources().getDimension(R.dimen.up_55))
         pump_config_fab.animate().translationY(getResources().getDimension(R.dimen.up_105))
@@ -64,32 +83,23 @@ class MainActivity : AppCompatActivity() {
 
     // Make Drink Function. Sends a signal to the RPi to make a drink selected from the spinner object
     fun pour_Drink(view: View) {
-        //Process
-        //1st get the drink selected from spinner,
-        //2nd send the signal corresponding to that to RPi
         Snackbar.make(view, "Function is still in development", Snackbar.LENGTH_LONG)
             .setAction("Action", null)
             .show()
     }
 
-    fun changeFragment(view:View){
-        var fragment:Fragment
-
-        if(view == findViewById(R.id.add_drink_button)){
-            fragment = Add_Drink()
-            var fragmentManager:FragmentManager = supportFragmentManager
-            var fragmentTransaction:FragmentTransaction = fragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.fragment_container,fragment)
-        }
+    // Add Drink Function when Add Drink FAB is clicked on
+    fun add_Drink(view:View){
+        fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.fragment_container,add_drink_frag)
+        fragmentTransaction.commit()
     }
 
-    fun add_Drink(view:View){
-        //changeFragment(view)
-        var fragment:Fragment
-        fragment = Add_Drink()
-        var fragmentManager:FragmentManager = getSupportFragmentManager()//supportFragmentManager
-        var fragmentTransaction:FragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragment_container,fragment)
+    // Change Pump Configuration Function when change pump config FAB is clicked on
+    fun change_pump_Config(view:View){
+        fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.fragment_container,pump_config_frag)
+        fragmentTransaction.commit()
     }
 
 }

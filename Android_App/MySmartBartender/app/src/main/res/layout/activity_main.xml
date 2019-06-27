@@ -75,10 +75,11 @@
 
               class="com.sagarpatel.mysmartbartender.Add_Drink"
               android:id="@+id/fragment_container"
-              android:layout_width="wrap_content"
+              android:layout_width="match_parent"
               android:layout_height="wrap_content"
               app:layout_constraintTop_toBottomOf="@id/Status_TextView"
               app:layout_constraintRight_toLeftOf="@id/Status_TextView"
+              app:layout_constraintLeft_toRightOf="@id/Status_TextView"
               />
 
     <android.support.design.widget.FloatingActionButton
@@ -99,6 +100,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
             android:src="@drawable/pump_congfig_24dp"
+            android:onClick="change_pump_Config"
             app:backgroundTint="@null"
             app:maxImageSize="58dp"
             app:layout_constraintRight_toRightOf="parent"
