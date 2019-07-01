@@ -14,15 +14,6 @@ import android.view.ViewGroup
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [Pump_Config.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [Pump_Config.newInstance] factory method to
- * create an instance of this fragment.
- *
- */
 class Pump_Config : Fragment() {
 
     override fun onCreateView(
@@ -31,6 +22,10 @@ class Pump_Config : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_pump__config, container, false)
+    }
+
+    fun pumpConfig(view:View){
+
     }
 
 }

@@ -2,11 +2,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
-             android:layout_height="match_parent"
+             android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
              android:background="@color/White"
              tools:context=".Pump_Config">
 
-    <!-- TODO: Update blank fragment layout -->
+
+
+
     <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -14,7 +16,7 @@
             android:orientation="vertical"
     >
 
-        <TextView android:layout_width="match_parent"
+        <TextView android:layout_width="wrap_content"
                   android:layout_height="match_parent"
                   android:text="Pump Configuration"
                   android:layout_gravity="center"
@@ -23,113 +25,98 @@
                   android:paddingLeft="20dp"
         />
 
-        <LinearLayout android:layout_width="match_parent"
-                      android:layout_height="match_parent"
-                      android:layout_gravity="center"
-                      android:orientation="horizontal"
-        >
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+    >
 
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pump 1"
-                    android:layout_gravity="center"
-                    android:id="@+id/pump1_label"
-                    android:textSize="20dp"
+        <android.support.design.widget.FloatingActionButton
+                android:id="@+id/pump1_Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:src="@drawable/ic_looks_one_black_24dp"
+                android:onClick="pumpConfig"
+                app:useCompatPadding="true"
+                app:elevation="0dp"
+                app:backgroundTint="@null"
+                app:maxImageSize="70dp"
+                app:fabCustomSize="56dp"
 
-            />
+        />
+        <android.support.design.widget.FloatingActionButton
+                android:id="@+id/pump2_Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:src="@drawable/ic_looks_two_black_24dp"
+                app:useCompatPadding="true"
+                app:elevation="0dp"
+                app:backgroundTint="@null"
+                app:maxImageSize="70dp"
+                app:fabCustomSize="56dp"
+        />
+        <android.support.design.widget.FloatingActionButton
+                android:id="@+id/pump3_Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:src="@drawable/ic_looks_3_black_24dp"
+                app:useCompatPadding="true"
+                app:elevation="0dp"
+                app:backgroundTint="@null"
+                app:maxImageSize="70dp"
+                app:fabCustomSize="56dp"
+        />
 
-            <EditText android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:hint="Name"
-            />
+    </LinearLayout>
 
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pump 2"
-                    android:layout_gravity="center"
-                    android:id="@+id/pump2_label"
-                    android:textSize="20dp"
-            />
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+    >
+        <android.support.design.widget.FloatingActionButton
+                android:id="@+id/pump4_Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:src="@drawable/ic_looks_4_black_24dp"
+                app:useCompatPadding="true"
+                app:elevation="0dp"
+                app:backgroundTint="@null"
+                app:maxImageSize="70dp"
+                app:fabCustomSize="56dp"
+        />
+        <android.support.design.widget.FloatingActionButton
+                android:id="@+id/pump5_Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:src="@drawable/ic_looks_5_black_24dp"
+                app:useCompatPadding="true"
+                app:elevation="0dp"
+                app:backgroundTint="@null"
+                app:maxImageSize="70dp"
+                app:fabCustomSize="56dp"
+        />
+        <android.support.design.widget.FloatingActionButton
+                android:id="@+id/pump6_Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:src="@drawable/ic_looks_6_black_24dp"
+                app:useCompatPadding="true"
+                app:elevation="0dp"
+                app:backgroundTint="@null"
+                app:maxImageSize="70dp"
+                app:fabCustomSize="56dp"
+        />
 
-            <EditText android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:hint="Name"
-            />
-
-        </LinearLayout>
-        <LinearLayout android:layout_width="match_parent"
-                      android:layout_height="match_parent"
-                      android:layout_gravity="center"
-                      android:orientation="horizontal"
-        >
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pump 3"
-                    android:layout_gravity="center"
-                    android:id="@+id/pump3_label"
-                    android:textSize="20dp"
-            />
-
-            <EditText android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:hint="Name"
-            />
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pump 4"
-                    android:layout_gravity="center"
-                    android:id="@+id/pump4_label"
-                    android:textSize="20dp"
-            />
-
-            <EditText android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:hint="Name"
-            />
-
-        </LinearLayout>
-
-        <LinearLayout android:layout_width="match_parent"
-                      android:layout_height="match_parent"
-                      android:layout_gravity="center"
-                      android:orientation="horizontal"
-        >
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pump 5"
-                    android:layout_gravity="center"
-                    android:id="@+id/pump5_label"
-                    android:textSize="20dp"
-            />
-
-            <EditText android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:hint="Name"
-            />
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pump 6"
-                    android:layout_gravity="center"
-                    android:id="@+id/pump6_label"
-                    android:textSize="20dp"
-            />
-
-            <EditText android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:hint="Name"
-            />
-
-        </LinearLayout>
+    </LinearLayout>
 
     </LinearLayout>
 
