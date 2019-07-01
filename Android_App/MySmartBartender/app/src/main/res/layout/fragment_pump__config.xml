@@ -3,7 +3,7 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             android:background="@color/DarkGray"
+             android:background="@color/White"
              tools:context=".Pump_Config">
 
     <!-- TODO: Update blank fragment layout -->
@@ -11,13 +11,126 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:orientation="vertical"
     >
-    <TextView android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:text="Pump Configuration"
-              android:layout_gravity="center"
-              android:textColor="@color/White"
-              android:textSize="20dp"/>
+
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:text="Pump Configuration"
+                  android:layout_gravity="center"
+                  android:textColor="@color/DarkGray"
+                  android:textSize="25dp"
+                  android:paddingLeft="20dp"
+        />
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:layout_gravity="center"
+                      android:orientation="horizontal"
+        >
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pump 1"
+                    android:layout_gravity="center"
+                    android:id="@+id/pump1_label"
+                    android:textSize="20dp"
+
+            />
+
+            <EditText android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:hint="Name"
+            />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pump 2"
+                    android:layout_gravity="center"
+                    android:id="@+id/pump2_label"
+                    android:textSize="20dp"
+            />
+
+            <EditText android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:hint="Name"
+            />
+
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:layout_gravity="center"
+                      android:orientation="horizontal"
+        >
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pump 3"
+                    android:layout_gravity="center"
+                    android:id="@+id/pump3_label"
+                    android:textSize="20dp"
+            />
+
+            <EditText android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:hint="Name"
+            />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pump 4"
+                    android:layout_gravity="center"
+                    android:id="@+id/pump4_label"
+                    android:textSize="20dp"
+            />
+
+            <EditText android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:hint="Name"
+            />
+
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:layout_gravity="center"
+                      android:orientation="horizontal"
+        >
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pump 5"
+                    android:layout_gravity="center"
+                    android:id="@+id/pump5_label"
+                    android:textSize="20dp"
+            />
+
+            <EditText android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:hint="Name"
+            />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pump 6"
+                    android:layout_gravity="center"
+                    android:id="@+id/pump6_label"
+                    android:textSize="20dp"
+            />
+
+            <EditText android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:hint="Name"
+            />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </FrameLayout>

@@ -12,7 +12,6 @@ import android.support.v4.app.FragmentTransaction
 import android.support.v4.app.FragmentManager
 import kotlinx.android.synthetic.main.activity_main.*
 
-
 class MainActivity : AppCompatActivity() {
 
     // Variables
@@ -23,17 +22,19 @@ class MainActivity : AppCompatActivity() {
     lateinit var add_drink_fab:View
     lateinit var info_about_fab:View
     var isMenuOpen:Boolean = false // Track FAB menu if open or close
+
     // Drink Menu Variables
     lateinit var drink_menu:Spinner
     lateinit var menu_adapter:ArrayAdapter<CharSequence>
     lateinit var menu_array_list:ArrayList<CharSequence>
+
     // Fragments
     lateinit var add_drink_frag:Add_Drink
     lateinit var pump_config_frag:Pump_Config
+
     //Fragment Variables
     lateinit var fragmentManager: FragmentManager
     lateinit var fragmentTransaction: FragmentTransaction
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
