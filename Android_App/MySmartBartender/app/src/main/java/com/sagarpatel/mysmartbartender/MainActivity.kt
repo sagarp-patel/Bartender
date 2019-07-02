@@ -1,18 +1,29 @@
 package com.sagarpatel.mysmartbartender
 
+import android.app.Dialog
 import android.app.PendingIntent.getActivity
+import android.content.DialogInterface
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v4.app.DialogFragment
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
 import android.support.v4.app.FragmentManager
+import android.support.v7.app.AlertDialog
+import android.util.Log
+import android.widget.Button
+import android.widget.EditText
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.dialog_pump_ingredient.*
+import kotlinx.android.synthetic.main.fragment_add__drink.*
+import kotlinx.android.synthetic.main.fragment_pump__config.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_Listener {
+
 
     // Variables
     //(FAB is Floating Action Button)
@@ -29,12 +40,21 @@ class MainActivity : AppCompatActivity() {
     lateinit var menu_array_list:ArrayList<CharSequence>
 
     // Fragments
+
     lateinit var add_drink_frag:Add_Drink
     lateinit var pump_config_frag:Pump_Config
 
     //Fragment Variables
     lateinit var fragmentManager: FragmentManager
     lateinit var fragmentTransaction: FragmentTransaction
+
+    // Drink ingredients
+    lateinit var pump1_ingredient:String
+    lateinit var pump2_ingredient:String
+    lateinit var pump3_ingredient:String
+    lateinit var pump4_ingredient:String
+    lateinit var pump5_ingredient:String
+    lateinit var pump6_ingredient:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,33 +73,46 @@ class MainActivity : AppCompatActivity() {
         pump_config_frag = Pump_Config()
         add_drink_frag = Add_Drink()
         fragmentManager = getSupportFragmentManager()
-
+        pump1_ingredient = "Not Set"
+        pump2_ingredient = "Not Set"
+        pump3_ingredient = "Not Set"
+        pump4_ingredient = "Not Set"
+        pump5_ingredient = "Not Set"
+        pump6_ingredient = "Not Set"
         closeMenu()
+
+
     }
 
     // Using this function open or close the FAB menu
     fun fab_onClick(view:View){
         if(isMenuOpen){
             closeMenu()
-            isMenuOpen = false
+
         }else{
             openMenu()
-            isMenuOpen = true
+
         }
     }
 
     //Open the FAB menu
     fun openMenu(){
-        info_about_fab.animate().translationY(-getResources().getDimension(R.dimen.up_55))
-        pump_config_fab.animate().translationY(-getResources().getDimension(R.dimen.up_105))
-        add_drink_fab.animate().translationY(-getResources().getDimension(R.dimen.up_155))
+        if(!isMenuOpen) {
+            info_about_fab.animate().translationY(-getResources().getDimension(R.dimen.up_55))
+            pump_config_fab.animate().translationY(-getResources().getDimension(R.dimen.up_105))
+            add_drink_fab.animate().translationY(-getResources().getDimension(R.dimen.up_155))
+            isMenuOpen = true
+        }
     }
 
     // Close the FAB menu (FAB is Floating Action Button)
     fun closeMenu(){
-        info_about_fab.animate().translationY(getResources().getDimension(R.dimen.up_55))
-        pump_config_fab.animate().translationY(getResources().getDimension(R.dimen.up_105))
-        add_drink_fab.animate().translationY(getResources().getDimension(R.dimen.up_155))
+        if(isMenuOpen) {
+            info_about_fab.animate().translationY(getResources().getDimension(R.dimen.up_55))
+            pump_config_fab.animate().translationY(getResources().getDimension(R.dimen.up_105))
+            add_drink_fab.animate().translationY(getResources().getDimension(R.dimen.up_155))
+            isMenuOpen = false
+        }
     }
 
     // Make Drink Function. Sends a signal to the RPi to make a drink selected from the spinner object
@@ -94,6 +127,7 @@ class MainActivity : AppCompatActivity() {
         fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragment_container,add_drink_frag)
         fragmentTransaction.commit()
+        closeMenu()
     }
 
     // Change Pump Configuration Function when change pump config FAB is clicked on
@@ -101,6 +135,20 @@ class MainActivity : AppCompatActivity() {
         fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragment_container,pump_config_frag)
         fragmentTransaction.commit()
+        closeMenu()
+
+    }
+
+    override fun getIngredientName(name: String, num:String) {
+        when(num){
+            "1"->pump1_ingredient=name
+            "2"->pump2_ingredient=name
+            "3"->pump3_ingredient=name
+            "4"->pump4_ingredient=name
+            "5"->pump5_ingredient=name
+            "6"->pump6_ingredient=name
+            else->print("It Did not Work!!!!")
+        }
     }
 
 }
