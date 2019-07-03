@@ -9,10 +9,7 @@ import android.support.v4.content.res.TypedArrayUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ListView
-import android.widget.Spinner
+import android.widget.*
 
 //private const val ARG_PARAM1 = "param1"
 //private const val ARG_PARAM2 = "param2"
@@ -22,6 +19,7 @@ class Add_Drink : Fragment() {
     lateinit var itemList:ArrayList<CharSequence>
     lateinit var ingredient_spinner_adapter:ArrayAdapter<CharSequence>
     lateinit var itemSpinner: Spinner
+    lateinit var recipelist_Adapter:ArrayAdapter<String>
     internal lateinit var callback:onPumpConfigChangedListener
 
 
@@ -35,7 +33,9 @@ class Add_Drink : Fragment() {
         itemList = ArrayList<CharSequence>()
         itemSpinner = view.findViewById(R.id.ingredient_pumps_spinner)
         var recipeListView:ListView = view.findViewById(R.id.Recipe_ListView)
-        var recipeItems:Array<String> = arrayOf("No Recipe Yet")
+        var recipeItems:ArrayList<String> = ArrayList<String>()
+        var addItemButton:Button = view.findViewById(R.id.add_ingredient_Button)
+        var drinkNameEditText:EditText = view.findViewById(R.id.drink_name_EditText)
         //Ingredient Spinner Code Here
         itemList.add("Not Set")
         itemList.add("Not Set")
@@ -46,16 +46,34 @@ class Add_Drink : Fragment() {
 
         ingredient_spinner_adapter = ArrayAdapter<CharSequence>(activity!!.applicationContext,android.R.layout.simple_spinner_dropdown_item,itemList)
         itemSpinner.adapter = ingredient_spinner_adapter
-        //callback.updatePumpConfig()
+        callback.updatePumpConfig()
         //Recipe ListView Code Here
-        var recipelist_Adapter:ArrayAdapter<String> = ArrayAdapter<String>(activity,android.R.layout.simple_list_item_1,recipeItems)
+        recipeItems.add("No Recipe Yet")
+        recipelist_Adapter = ArrayAdapter<String>(activity,android.R.layout.simple_list_item_1,recipeItems)
         recipeListView.adapter = recipelist_Adapter
         // Create Drink Button for when user creates a drink
         //Code for said Button goes here
         createButton.setOnClickListener{
-            Snackbar.make(view.findViewById(R.id.create_drink_button), "Creating Drink still in Development", Snackbar.LENGTH_LONG)
-                .setAction("Action", null)
-                .show()
+            val drinkName = drinkNameEditText.text.toString()
+            val drink = Drink(drinkName,recipeItems)
+            callback.sendDrinktoMain(drink)
+            recipeItems.clear()
+            recipeItems.add("No Recipe Yet")
+            recipelist_Adapter = ArrayAdapter<String>(activity,android.R.layout.simple_list_item_1,recipeItems)
+            recipeListView.adapter = recipelist_Adapter
+            drinkNameEditText.text.clear()
+        }
+        // Add Ingredient to Recipe Button
+        addItemButton.setOnClickListener{
+            if(recipeItems[0] == "No Recipe Yet") {
+                recipeItems[0] = itemSpinner.selectedItem.toString()
+                recipelist_Adapter = ArrayAdapter<String>(activity,android.R.layout.simple_list_item_1,recipeItems)
+            }else{
+                recipeItems.add(itemSpinner.selectedItem.toString())
+                recipelist_Adapter = ArrayAdapter<String>(activity,android.R.layout.simple_list_item_1,recipeItems)
+                //recipeListView.adapter = recipelist_Adapter
+            }
+            recipeListView.adapter = recipelist_Adapter
         }
         // Inflate the layout for this fragment
         return view
@@ -64,6 +82,7 @@ class Add_Drink : Fragment() {
 
     interface onPumpConfigChangedListener{
         fun updatePumpConfig()// This Function will be called from Main Activity to update the pump config
+        fun sendDrinktoMain(drink:Drink) // This Function will send the drink and its recipe to the main activity
     }
 
 

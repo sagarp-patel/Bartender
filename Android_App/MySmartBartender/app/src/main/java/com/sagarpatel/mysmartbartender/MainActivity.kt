@@ -5,8 +5,6 @@ import android.app.PendingIntent.getActivity
 import android.content.DialogInterface
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
 import android.support.design.widget.Snackbar
 import android.support.v4.app.DialogFragment
 import android.view.View
@@ -27,6 +25,7 @@ import kotlinx.android.synthetic.main.fragment_pump__config.*
 class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_Listener,Add_Drink.onPumpConfigChangedListener {
 
 
+
     // Variables
     //(FAB is Floating Action Button)
     //Floating Action Buttons to Change Fragments
@@ -44,6 +43,7 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
     // Fragments
     lateinit var add_drink_frag:Add_Drink
     lateinit var pump_config_frag:Pump_Config
+    lateinit var information_frag:Information
 
     //Fragment Variables
     lateinit var fragmentManager: FragmentManager
@@ -56,6 +56,9 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
     lateinit var pump4_ingredient:String
     lateinit var pump5_ingredient:String
     lateinit var pump6_ingredient:String
+
+    // Drink List
+    lateinit var drinkList:ArrayList<Drink>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,6 +76,7 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
         drink_menu.adapter = menu_adapter
         pump_config_frag = Pump_Config()
         add_drink_frag = Add_Drink()
+        information_frag = Information()
         fragmentManager = getSupportFragmentManager()
         pump1_ingredient = "Not Set"
         pump2_ingredient = "Not Set"
@@ -80,6 +84,7 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
         pump4_ingredient = "Not Set"
         pump5_ingredient = "Not Set"
         pump6_ingredient = "Not Set"
+        drinkList = ArrayList<Drink>()
         closeMenu()
 
 
@@ -132,6 +137,13 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
         closeMenu()
     }
 
+    fun show_info(view:View){
+        fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.fragment_container,information_frag)
+        fragmentTransaction.commit()
+        closeMenu()
+    }
+
     // Change Pump Configuration Function when change pump config FAB is clicked on
     fun change_pump_Config(view:View){
         fragmentTransaction = fragmentManager.beginTransaction()
@@ -172,6 +184,18 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
 
         }
 
+    }
+
+    override fun sendDrinktoMain(drink:Drink) {
+        if(menu_array_list[0] == "No Drinks") {
+            menu_array_list[0] = drink.getName()
+            menu_adapter = ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_dropdown_item, menu_array_list)
+        }else{
+            menu_array_list.add(drink.getName())
+            menu_adapter = ArrayAdapter<CharSequence>(this,android.R.layout.simple_spinner_dropdown_item,menu_array_list)
+        }
+        drink_menu.adapter = menu_adapter
+        drinkList.add(drink)
     }
 
     override fun onAttachFragment(fragment: Fragment) {

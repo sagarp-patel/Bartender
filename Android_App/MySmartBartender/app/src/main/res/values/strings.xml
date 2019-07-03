@@ -2,6 +2,14 @@
     <string name="app_name">Smart Bartender</string>
     <string name="btn_make_text">Pour Drink</string>
 
+    <string name="description"> This application was created to go along with the Bartender project.
+        It was created by me aka Sagar Patel. The app connects to a Bartender machine and can control the bartender.
+        I built the software and hardware pretty much from scratch. If you want you can look at the code through my github
+        and check out my other projects as well. You can find link to my github on my website www.sagarpatel.dev If you
+        have any questions or suggestions you can send them to through my contact email 10sagarpatel@gmail.com
+        I got the inspiration of the project from Hackster.io . I found many Bartender projects on there, and based mines
+        of them with a more additions as well.
+    </string>
     <!-- Spinner String -->
     <string-array name="menu_items">
         <item>None Available</item>
