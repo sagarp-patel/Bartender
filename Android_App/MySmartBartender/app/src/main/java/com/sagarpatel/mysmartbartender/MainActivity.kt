@@ -5,6 +5,8 @@ import android.app.PendingIntent.getActivity
 import android.content.DialogInterface
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Parcel
+import android.os.Parcelable
 import android.support.design.widget.Snackbar
 import android.support.v4.app.DialogFragment
 import android.view.View
@@ -22,7 +24,7 @@ import kotlinx.android.synthetic.main.dialog_pump_ingredient.*
 import kotlinx.android.synthetic.main.fragment_add__drink.*
 import kotlinx.android.synthetic.main.fragment_pump__config.*
 
-class MainActivity : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_Listener {
+class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_Listener,Add_Drink.onPumpConfigChangedListener {
 
 
     // Variables
@@ -40,7 +42,6 @@ class MainActivity : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_Listen
     lateinit var menu_array_list:ArrayList<CharSequence>
 
     // Fragments
-
     lateinit var add_drink_frag:Add_Drink
     lateinit var pump_config_frag:Pump_Config
 
@@ -127,6 +128,7 @@ class MainActivity : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_Listen
         fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragment_container,add_drink_frag)
         fragmentTransaction.commit()
+        //updatePumpConfig()
         closeMenu()
     }
 
@@ -149,6 +151,33 @@ class MainActivity : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_Listen
             "6"->pump6_ingredient=name
             else->print("It Did not Work!!!!")
         }
+        Snackbar.make(findViewById(R.id.pump_config_button), "Pump is Set!!!", Snackbar.LENGTH_LONG)
+            .setAction("Action", null)
+            .show()
     }
 
+    override fun updatePumpConfig() {
+        //First get the correct Fragment
+
+        val addDrinkFrag = add_drink_frag
+        if(addDrinkFrag != null){
+            var updatedPumpConfig:ArrayList<CharSequence> = ArrayList<CharSequence>()
+            updatedPumpConfig.add(pump1_ingredient)
+            updatedPumpConfig.add(pump2_ingredient)
+            updatedPumpConfig.add(pump3_ingredient)
+            updatedPumpConfig.add(pump4_ingredient)
+            updatedPumpConfig.add(pump5_ingredient)
+            updatedPumpConfig.add(pump6_ingredient)
+            addDrinkFrag.updateItemList(updatedPumpConfig)
+
+        }
+
+    }
+
+    override fun onAttachFragment(fragment: Fragment) {
+        if (fragment is Add_Drink) {
+            fragment.setPumpConfigChangedListener(this)
+        }
+        //updatePumpConfig()
+    }
 }

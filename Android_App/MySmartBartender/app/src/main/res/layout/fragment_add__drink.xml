@@ -34,7 +34,6 @@
                app:layout_constraintRight_toRightOf="parent"
                app:layout_constraintRight_toLeftOf="@id/drink_name_EditText"
                app:layout_constraintTop_toBottomOf="@id/addDrinkFrag_textview"
-
        />
 
        <EditText
@@ -42,6 +41,7 @@
                android:layout_height="wrap_content"
                android:id="@+id/drink_name_EditText"
                android:textColor="@color/DarkGray"
+               android:hint="Drink Name"
                app:layout_constraintRight_toLeftOf="@id/drink_name_label"
                app:layout_constraintTop_toBottomOf="@id/addDrinkFrag_textview"
        />
@@ -54,16 +54,47 @@
                app:layout_constraintTop_toBottomOf="@id/drink_name_EditText"
                app:layout_constraintBottom_toBottomOf="parent"
        />
+       <ListView
+               android:layout_width="410dp"
+               android:layout_height="131dp"
+               android:id="@+id/Recipe_ListView"
+               app:layout_constraintLeft_toRightOf="parent"
+               app:layout_constraintRight_toLeftOf="parent"
+               app:layout_constraintTop_toBottomOf="@id/drink_name_EditText"
+       />
+
+       <LinearLayout android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:orientation="horizontal"
+                     android:id="@+id/add_drink_linear_layout"
+                     app:layout_constraintLeft_toRightOf="parent"
+                     app:layout_constraintRight_toLeftOf="parent"
+                     app:layout_constraintTop_toBottomOf="@id/Recipe_ListView"
+                     app:layout_constraintBottom_toTopOf="@id/create_drink_button"
+       >
+           <Spinner android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ingredient_pumps_spinner"
+           >
+           </Spinner>
+           <Button android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="center"
+                   android:text="Add"
+                   android:id="@+id/add_ingredient_Button"
+           />
+       </LinearLayout>
 
        <Button
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:text="Create Drink"
+               android:id="@+id/create_drink_button"
                app:layout_constraintLeft_toRightOf="parent"
                app:layout_constraintRight_toLeftOf="parent"
-               app:layout_constraintTop_toBottomOf="@id/drink_name_EditText"
-               app:layout_constraintBottom_toBottomOf="parent"
-       />
+               app:layout_constraintTop_toBottomOf="@id/add_drink_linear_layout"
+               />
+
 
    </android.support.constraint.ConstraintLayout>
 
