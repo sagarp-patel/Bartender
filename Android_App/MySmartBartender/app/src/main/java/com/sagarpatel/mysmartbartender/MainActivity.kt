@@ -2,7 +2,10 @@ package com.sagarpatel.mysmartbartender
 
 import android.app.Dialog
 import android.app.PendingIntent.getActivity
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothDevice
 import android.content.DialogInterface
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -23,8 +26,6 @@ import kotlinx.android.synthetic.main.fragment_add__drink.*
 import kotlinx.android.synthetic.main.fragment_pump__config.*
 
 class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_Listener,Add_Drink.onPumpConfigChangedListener {
-
-
 
     // Variables
     //(FAB is Floating Action Button)
@@ -60,6 +61,10 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
     // Drink List
     lateinit var drinkList:ArrayList<Drink>
 
+    //Bluetooth
+    lateinit var bluetoothAdapter: BluetoothAdapter
+    final var REQUEST_ENABLE_BT = 1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -87,17 +92,39 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
         drinkList = ArrayList<Drink>()
         closeMenu()
 
+        // Bluetooth Functionality
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+        if (bluetoothAdapter == null) {
+            // Device doesn't support Bluetooth
+        }else{
 
+        if(bluetoothAdapter?.isEnabled == false){
+            val enableBluetoothIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+            startActivityForResult(enableBluetoothIntent,REQUEST_ENABLE_BT)
+        }
+        }
+        var isRPiPaired:Boolean = false
+        val pairedDevices: Set<BluetoothDevice>? = bluetoothAdapter?.bondedDevices
+        pairedDevices?.forEach { device ->
+            val deviceName = device.name
+            val deviceHardwareAddress = device.address // MAC address
+            if(deviceName == "raspberrypi"){
+                isRPiPaired = true
+            }
+        }
+
+        if(isRPiPaired){
+            Log.e("RPiPaired","The Raspberyy Pi is paired \n\n\n")
+            println("RPi is within the bonded list of devices")
+        }
     }
 
     // Using this function open or close the FAB menu
     fun fab_onClick(view:View){
         if(isMenuOpen){
             closeMenu()
-
         }else{
             openMenu()
-
         }
     }
 
@@ -123,6 +150,7 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
 
     // Make Drink Function. Sends a signal to the RPi to make a drink selected from the spinner object
     fun pour_Drink(view: View) {
+
         Snackbar.make(view, "Function is still in development", Snackbar.LENGTH_LONG)
             .setAction("Action", null)
             .show()
@@ -150,7 +178,6 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
         fragmentTransaction.replace(R.id.fragment_container,pump_config_frag)
         fragmentTransaction.commit()
         closeMenu()
-
     }
 
     override fun getIngredientName(name: String, num:String) {
@@ -170,9 +197,8 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
 
     override fun updatePumpConfig() {
         //First get the correct Fragment
-
         val addDrinkFrag = add_drink_frag
-        if(addDrinkFrag != null){
+        if(addDrinkFrag != null){ // Make sure its not null
             var updatedPumpConfig:ArrayList<CharSequence> = ArrayList<CharSequence>()
             updatedPumpConfig.add(pump1_ingredient)
             updatedPumpConfig.add(pump2_ingredient)
@@ -180,12 +206,11 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
             updatedPumpConfig.add(pump4_ingredient)
             updatedPumpConfig.add(pump5_ingredient)
             updatedPumpConfig.add(pump6_ingredient)
-            addDrinkFrag.updateItemList(updatedPumpConfig)
-
+            addDrinkFrag.updateItemList(updatedPumpConfig) // Send the new Pump Configuration
         }
-
     }
 
+    // Brings the Drink and its Recipe from Add Drink Fragment to here
     override fun sendDrinktoMain(drink:Drink) {
         if(menu_array_list[0] == "No Drinks") {
             menu_array_list[0] = drink.getName()
@@ -202,6 +227,5 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
         if (fragment is Add_Drink) {
             fragment.setPumpConfigChangedListener(this)
         }
-        //updatePumpConfig()
     }
 }

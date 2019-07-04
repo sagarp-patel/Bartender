@@ -102,7 +102,4 @@ class Add_Drink : Fragment() {
             itemSpinner.adapter = ingredient_spinner_adapter
         }
     }
-
-
-
 }
