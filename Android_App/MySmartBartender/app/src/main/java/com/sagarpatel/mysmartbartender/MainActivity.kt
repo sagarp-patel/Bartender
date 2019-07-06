@@ -4,8 +4,11 @@ import android.app.Dialog
 import android.app.PendingIntent.getActivity
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
+import android.bluetooth.BluetoothServerSocket
+import android.bluetooth.BluetoothSocket
 import android.content.DialogInterface
 import android.content.Intent
+import android.icu.lang.UProperty.NAME  //Incase you need to erase bluetooth thingy erase this one
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -24,6 +27,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_pump_ingredient.*
 import kotlinx.android.synthetic.main.fragment_add__drink.*
 import kotlinx.android.synthetic.main.fragment_pump__config.*
+import java.io.IOException
 
 class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_Listener,Add_Drink.onPumpConfigChangedListener {
 
@@ -91,6 +95,7 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
         pump6_ingredient = "Not Set"
         drinkList = ArrayList<Drink>()
         closeMenu()
+        println("Hello there ice to meet you")
 
         // Bluetooth Functionality
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
@@ -228,4 +233,7 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
             fragment.setPumpConfigChangedListener(this)
         }
     }
+
+
+
 }
