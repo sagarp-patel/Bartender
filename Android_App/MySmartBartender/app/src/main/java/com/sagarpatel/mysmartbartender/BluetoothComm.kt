@@ -20,7 +20,7 @@ const val MESSAGE_READ: Int = 0
 const val MESSAGE_WRITE: Int = 1
 const val MESSAGE_TOAST: Int = 2
 // ... (Add other message types here as needed.)
-
+/*
 class MyBluetoothService(
     // handler that gets info from Bluetooth service
     private val handler: Handler
@@ -156,4 +156,4 @@ class MyBluetoothService(
 
 
 }
-
+*/

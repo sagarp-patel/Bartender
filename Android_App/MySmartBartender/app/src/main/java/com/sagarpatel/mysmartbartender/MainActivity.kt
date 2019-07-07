@@ -11,6 +11,7 @@ import android.content.Intent
 import android.icu.lang.UProperty.NAME  //Incase you need to erase bluetooth thingy erase this one
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.BaseColumns
 import android.support.design.widget.Snackbar
 import android.support.v4.app.DialogFragment
 import android.view.View
@@ -21,13 +22,14 @@ import android.support.v4.app.FragmentTransaction
 import android.support.v4.app.FragmentManager
 import android.support.v7.app.AlertDialog
 import android.util.Log
+/*
 import android.widget.Button
 import android.widget.EditText
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_pump_ingredient.*
 import kotlinx.android.synthetic.main.fragment_add__drink.*
 import kotlinx.android.synthetic.main.fragment_pump__config.*
-import java.io.IOException
+import java.io.IOException*/
 
 class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_Listener,Add_Drink.onPumpConfigChangedListener {
 
@@ -69,6 +71,9 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
     lateinit var bluetoothAdapter: BluetoothAdapter
     final var REQUEST_ENABLE_BT = 1
 
+    // Database
+    lateinit var db:BartenderDatabase
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -87,6 +92,7 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
         add_drink_frag = Add_Drink()
         information_frag = Information()
         fragmentManager = getSupportFragmentManager()
+        db = BartenderDatabase(this)
         pump1_ingredient = "Not Set"
         pump2_ingredient = "Not Set"
         pump3_ingredient = "Not Set"
@@ -122,6 +128,22 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
             Log.e("RPiPaired","The Raspberyy Pi is paired \n\n\n")
             println("RPi is within the bonded list of devices")
         }
+
+        // Database stuff
+        val cursor = db.getAllDrinks()
+        var drink_name_String = ""
+        if(cursor != null){ // If we did receive drink data from cursor
+            menu_array_list.clear()
+            with(cursor){
+                while(moveToNext()){
+                    drink_name_String = getString(getColumnIndexOrThrow(BartenderDatabase.DRINK_NAME))
+                    menu_array_list.add(drink_name_String)
+                }
+            }
+            menu_adapter = ArrayAdapter<CharSequence>(this,android.R.layout.simple_spinner_dropdown_item,menu_array_list)
+            drink_menu.adapter = menu_adapter
+
+        }
     }
 
     // Using this function open or close the FAB menu
@@ -155,7 +177,6 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
 
     // Make Drink Function. Sends a signal to the RPi to make a drink selected from the spinner object
     fun pour_Drink(view: View) {
-
         Snackbar.make(view, "Function is still in development", Snackbar.LENGTH_LONG)
             .setAction("Action", null)
             .show()
@@ -200,7 +221,7 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
             .show()
     }
 
-    override fun updatePumpConfig() {
+    override fun updatePumpConfig() {// When the user updates the pump config change them out here
         //First get the correct Fragment
         val addDrinkFrag = add_drink_frag
         if(addDrinkFrag != null){ // Make sure its not null
@@ -224,6 +245,7 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
             menu_array_list.add(drink.getName())
             menu_adapter = ArrayAdapter<CharSequence>(this,android.R.layout.simple_spinner_dropdown_item,menu_array_list)
         }
+        db.addDrink(drink)
         drink_menu.adapter = menu_adapter
         drinkList.add(drink)
     }
