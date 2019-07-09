@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.content.res.TypedArrayUtils
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -85,26 +86,34 @@ class Add_Drink : Fragment() {
         }
         // Add Ingredient to Recipe Button
         addItemButton.setOnClickListener{
-            if(recipeItems[0] == "No Recipe Yet") {
-                recipeItems[0] = itemSpinner.selectedItem.toString()
-                recipelist_Adapter = ArrayAdapter<String>(activity,android.R.layout.simple_list_item_1,recipeItems)
+            if(!TextUtils.isEmpty(ingredientAmount.text.toString())) {
+                if (recipeItems[0] == "No Recipe Yet") {
+                    recipeItems[0] = itemSpinner.selectedItem.toString()
+                    recipelist_Adapter =
+                        ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, recipeItems)
+                } else {
+                    recipeItems.add(itemSpinner.selectedItem.toString())
+                    recipelist_Adapter =
+                        ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, recipeItems)
+                    //recipeListView.adapter = recipelist_Adapter
+                }
+                var itemAmount: Int = ingredientAmount.text.toString().toInt()
+                var selectedItem: Int = itemSpinner.selectedItemPosition
+                when (selectedItem) {
+                    0 -> ingredientAmountList[0] = itemAmount
+                    1 -> ingredientAmountList[1] = itemAmount
+                    2 -> ingredientAmountList[2] = itemAmount
+                    3 -> ingredientAmountList[3] = itemAmount
+                    4 -> ingredientAmountList[4] = itemAmount
+                    5 -> ingredientAmountList[5] = itemAmount
+                }
+                recipeListView.adapter = recipelist_Adapter
+                ingredientAmount.text.clear()
             }else{
-                recipeItems.add(itemSpinner.selectedItem.toString())
-                recipelist_Adapter = ArrayAdapter<String>(activity,android.R.layout.simple_list_item_1,recipeItems)
-                //recipeListView.adapter = recipelist_Adapter
+                Snackbar.make(view, "Amount cannot be empty", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null)
+                    .show()
             }
-            var itemAmount:Int = ingredientAmount.text.toString().toInt()
-            var selectedItem:Int = itemSpinner.selectedItemPosition
-            when(selectedItem){
-                0 -> ingredientAmountList[0] = itemAmount
-                1 -> ingredientAmountList[1] = itemAmount
-                2 -> ingredientAmountList[2] = itemAmount
-                3 -> ingredientAmountList[3] = itemAmount
-                4 -> ingredientAmountList[4] = itemAmount
-                5 -> ingredientAmountList[5] = itemAmount
-            }
-            recipeListView.adapter = recipelist_Adapter
-            ingredientAmount.text.clear()
         }
         // Inflate the layout for this fragment
         return view

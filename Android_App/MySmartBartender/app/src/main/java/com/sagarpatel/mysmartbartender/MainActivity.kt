@@ -68,11 +68,15 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
     lateinit var drinkList:ArrayList<Drink>
 
     //Bluetooth
-    lateinit var bluetoothAdapter: BluetoothAdapter
+    var bluetoothAdapter: BluetoothAdapter? = null
     final var REQUEST_ENABLE_BT = 1
+    lateinit var bluetoothComm:MyBluetoothService
 
     // Database
     lateinit var db:BartenderDatabase
+    companion object{
+        val EXTRA_ADDRESS: String = "Device_Address"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,9 +89,7 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
         info_about_fab = findViewById(R.id.info_button)
         drink_menu = findViewById(R.id.drink_menu_spinner)
         menu_array_list = ArrayList<CharSequence>()
-        menu_array_list.add("No Drinks")
-        menu_adapter = ArrayAdapter<CharSequence>(this,android.R.layout.simple_spinner_dropdown_item,menu_array_list)
-        drink_menu.adapter = menu_adapter
+
         pump_config_frag = Pump_Config()
         add_drink_frag = Add_Drink()
         information_frag = Information()
@@ -104,12 +106,16 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
         println("Hello there ice to meet you")
 
         // Bluetooth Functionality
+        bluetoothComm = MyBluetoothService()
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+        bluetoothComm.pairedDevices()
+        /*
         if (bluetoothAdapter == null) {
             // Device doesn't support Bluetooth
+            return
         }else{
 
-        if(bluetoothAdapter?.isEnabled == false){
+        if(!bluetoothAdapter!!.isEnabled){
             val enableBluetoothIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
             startActivityForResult(enableBluetoothIntent,REQUEST_ENABLE_BT)
         }
@@ -127,11 +133,12 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
         if(isRPiPaired){
             Log.e("RPiPaired","The Raspberyy Pi is paired \n\n\n")
             println("RPi is within the bonded list of devices")
-        }
+        }*/
 
         // Database stuff
         val cursor = db.getAllDrinks()
         var drink_name_String = ""
+
         if(cursor != null){ // If we did receive drink data from cursor
             menu_array_list.clear()
             with(cursor){
@@ -140,6 +147,12 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
                     menu_array_list.add(drink_name_String)
                 }
             }
+            menu_adapter = ArrayAdapter<CharSequence>(this,android.R.layout.simple_spinner_dropdown_item,menu_array_list)
+            drink_menu.adapter = menu_adapter
+
+        }
+        if(menu_array_list.size == 0){
+            menu_array_list.add("No Drinks")
             menu_adapter = ArrayAdapter<CharSequence>(this,android.R.layout.simple_spinner_dropdown_item,menu_array_list)
             drink_menu.adapter = menu_adapter
 
@@ -177,6 +190,8 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
 
     // Make Drink Function. Sends a signal to the RPi to make a drink selected from the spinner object
     fun pour_Drink(view: View) {
+        bluetoothComm.startConnectionToBartender(this)
+        bluetoothComm.sendCommand("a")
         Snackbar.make(view, "Function is still in development", Snackbar.LENGTH_LONG)
             .setAction("Action", null)
             .show()
