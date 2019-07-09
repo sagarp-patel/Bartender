@@ -190,11 +190,33 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
 
     // Make Drink Function. Sends a signal to the RPi to make a drink selected from the spinner object
     fun pour_Drink(view: View) {
-        bluetoothComm.startConnectionToBartender(this)
-        bluetoothComm.sendCommand("a")
-        Snackbar.make(view, "Function is still in development", Snackbar.LENGTH_LONG)
-            .setAction("Action", null)
-            .show()
+        if(drinkList.size > 0) {
+            // Get the Selected Drink
+            var selectedDrink: Drink = drinkList[drink_menu.selectedItemPosition]
+            println(selectedDrink.getName())
+            Log.e("Selected Drink Function", selectedDrink.getName())
+            // Now get its recipe then send it over Bluetooth
+            var command: String = getRecipe(selectedDrink)
+            bluetoothComm.startConnectionToBartender(this)
+            bluetoothComm.sendCommand(command)
+        }else {
+            Snackbar.make(view, "No Drinks Created", Snackbar.LENGTH_LONG)
+                .setAction("Action", null)
+                .show()
+        }
+    }
+
+    fun getRecipe(drink:Drink):String{
+        var recipe:String = "{"
+        recipe+= ("\nPump_1: " + drink.pump_1.toString()
+                + "\nPump_2: " + drink.pump_2.toString()
+                + "\nPump_3: " + drink.pump_3.toString()
+                + "\nPump_4: " + drink.pump_4.toString()
+                + "\nPump_5: " + drink.pump_5.toString()
+                + "\nPump_6: " + drink.pump_6.toString()
+                + "\n}"
+                )
+        return recipe
     }
 
     // Add Drink Function when Add Drink FAB is clicked on
@@ -222,18 +244,24 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
     }
 
     override fun getIngredientName(name: String, num:String) {
-        when(num){
-            "1"->pump1_ingredient=name
-            "2"->pump2_ingredient=name
-            "3"->pump3_ingredient=name
-            "4"->pump4_ingredient=name
-            "5"->pump5_ingredient=name
-            "6"->pump6_ingredient=name
-            else->print("It Did not Work!!!!")
+        if(name != "") {
+            when (num) {
+                "1" -> pump1_ingredient = name
+                "2" -> pump2_ingredient = name
+                "3" -> pump3_ingredient = name
+                "4" -> pump4_ingredient = name
+                "5" -> pump5_ingredient = name
+                "6" -> pump6_ingredient = name
+                else -> print("It Did not Work!!!!")
+            }
+            Snackbar.make(findViewById(R.id.pump_config_button), "Pump is Set!!!", Snackbar.LENGTH_LONG)
+                .setAction("Action", null)
+                .show()
+        }else{
+            Snackbar.make(findViewById(R.id.pump_config_button), "Please Enter a proper name", Snackbar.LENGTH_LONG)
+                .setAction("Action", null)
+                .show()
         }
-        Snackbar.make(findViewById(R.id.pump_config_button), "Pump is Set!!!", Snackbar.LENGTH_LONG)
-            .setAction("Action", null)
-            .show()
     }
 
     override fun updatePumpConfig() {// When the user updates the pump config change them out here

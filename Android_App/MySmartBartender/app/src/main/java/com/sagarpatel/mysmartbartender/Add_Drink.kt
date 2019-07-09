@@ -70,19 +70,25 @@ class Add_Drink : Fragment() {
         //Code for said Button goes here
         createButton.setOnClickListener{
             val drinkName = drinkNameEditText.text.toString()
-            val drink = Drink(drinkName,recipeItems)
-            drink.pump_1 = ingredientAmountList[0]
-            drink.pump_2 = ingredientAmountList[1]
-            drink.pump_3 = ingredientAmountList[2]
-            drink.pump_4 = ingredientAmountList[3]
-            drink.pump_5 = ingredientAmountList[4]
-            drink.pump_6 = ingredientAmountList[5]
-            callback.sendDrinktoMain(drink)
-            recipeItems.clear()
-            recipeItems.add("No Recipe Yet")
-            recipelist_Adapter = ArrayAdapter<String>(activity,android.R.layout.simple_list_item_1,recipeItems)
-            recipeListView.adapter = recipelist_Adapter
-            drinkNameEditText.text.clear()
+            if(drinkName != "") {
+                val drink = Drink(drinkName, recipeItems)
+                drink.pump_1 = ingredientAmountList[0]
+                drink.pump_2 = ingredientAmountList[1]
+                drink.pump_3 = ingredientAmountList[2]
+                drink.pump_4 = ingredientAmountList[3]
+                drink.pump_5 = ingredientAmountList[4]
+                drink.pump_6 = ingredientAmountList[5]
+                callback.sendDrinktoMain(drink)
+                recipeItems.clear()
+                recipeItems.add("No Recipe Yet")
+                recipelist_Adapter = ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, recipeItems)
+                recipeListView.adapter = recipelist_Adapter
+                drinkNameEditText.text.clear()
+            }else {
+                Snackbar.make(view.findViewById(R.id.create_drink_button), "Drink Name or any other field cannot be empty", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null)
+                    .show()
+            }
         }
         // Add Ingredient to Recipe Button
         addItemButton.setOnClickListener{

@@ -54,8 +54,9 @@
                app:layout_constraintTop_toBottomOf="@id/drink_name_EditText"
                app:layout_constraintBottom_toBottomOf="parent"
        />
+       <!-- 410dp-->
        <ListView
-               android:layout_width="410dp"
+               android:layout_width="wrap_content"
                android:layout_height="131dp"
                android:id="@+id/Recipe_ListView"
                app:layout_constraintLeft_toRightOf="parent"
