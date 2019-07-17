@@ -90,18 +90,17 @@ class Add_Drink : Fragment() {
                     .show()
             }
         }
-        // Add Ingredient to Recipe Button
+        // Add Ingredient to Recipe Button Listener
         addItemButton.setOnClickListener{
             if(!TextUtils.isEmpty(ingredientAmount.text.toString())) {
-                if (recipeItems[0] == "No Recipe Yet") {
+                if (recipeItems[0] == "No Recipe Yet") { // If its the first ingredient added remove the No Recipe Yet from the list
                     recipeItems[0] = itemSpinner.selectedItem.toString()
                     recipelist_Adapter =
                         ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, recipeItems)
-                } else {
+                } else { // Else just add it normally
                     recipeItems.add(itemSpinner.selectedItem.toString())
                     recipelist_Adapter =
                         ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, recipeItems)
-                    //recipeListView.adapter = recipelist_Adapter
                 }
                 var itemAmount: Int = ingredientAmount.text.toString().toInt()
                 var selectedItem: Int = itemSpinner.selectedItemPosition
@@ -136,9 +135,10 @@ class Add_Drink : Fragment() {
         this.callback = callback
     }
 
-    fun updateItemList(pumps:ArrayList<CharSequence>){// This Function updates the ItemList to most current Pump Configurations
+    // This Function updates the ItemList to most current Pump Configurations
+    fun updateItemList(pumps:ArrayList<CharSequence>){
         if(itemList != null) {
-            itemList.clear()
+            itemList.clear() // Clear the old Pump Configuration
             itemList = pumps
             ingredient_spinner_adapter = ArrayAdapter<CharSequence>(
                 activity!!.applicationContext,

@@ -22,14 +22,6 @@ import android.support.v4.app.FragmentTransaction
 import android.support.v4.app.FragmentManager
 import android.support.v7.app.AlertDialog
 import android.util.Log
-/*
-import android.widget.Button
-import android.widget.EditText
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.dialog_pump_ingredient.*
-import kotlinx.android.synthetic.main.fragment_add__drink.*
-import kotlinx.android.synthetic.main.fragment_pump__config.*
-import java.io.IOException*/
 
 class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_Listener,Add_Drink.onPumpConfigChangedListener {
 
@@ -109,31 +101,6 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
         bluetoothComm = MyBluetoothService()
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
         bluetoothComm.pairedDevices()
-        /*
-        if (bluetoothAdapter == null) {
-            // Device doesn't support Bluetooth
-            return
-        }else{
-
-        if(!bluetoothAdapter!!.isEnabled){
-            val enableBluetoothIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
-            startActivityForResult(enableBluetoothIntent,REQUEST_ENABLE_BT)
-        }
-        }
-        var isRPiPaired:Boolean = false
-        val pairedDevices: Set<BluetoothDevice>? = bluetoothAdapter?.bondedDevices
-        pairedDevices?.forEach { device ->
-            val deviceName = device.name
-            val deviceHardwareAddress = device.address // MAC address
-            if(deviceName == "raspberrypi"){
-                isRPiPaired = true
-            }
-        }
-
-        if(isRPiPaired){
-            Log.e("RPiPaired","The Raspberyy Pi is paired \n\n\n")
-            println("RPi is within the bonded list of devices")
-        }*/
 
         // Database stuff
         val cursor = db.getAllDrinks()
@@ -144,6 +111,21 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
             with(cursor){
                 while(moveToNext()){
                     drink_name_String = getString(getColumnIndexOrThrow(BartenderDatabase.DRINK_NAME))
+                    var pumpIngredient1 = getString(getColumnIndexOrThrow(BartenderDatabase.INGREDIENT_1))
+                    var pumpIngredient2 = getString(getColumnIndexOrThrow(BartenderDatabase.INGREDIENT_2))
+                    var pumpIngredient3 =  getString(getColumnIndexOrThrow(BartenderDatabase.INGREDIENT_3))
+                    var pumpIngredient4 =  getString(getColumnIndexOrThrow(BartenderDatabase.INGREDIENT_4))
+                    var pumpIngredient5 =  getString(getColumnIndexOrThrow(BartenderDatabase.INGREDIENT_5))
+                    var pumpIngredient6 =  getString(getColumnIndexOrThrow(BartenderDatabase.INGREDIENT_6))
+                    var arrayListRecipe:ArrayList<String> = ArrayList<String>()
+                    arrayListRecipe.add(pumpIngredient1)
+                    arrayListRecipe.add(pumpIngredient2)
+                    arrayListRecipe.add(pumpIngredient3)
+                    arrayListRecipe.add(pumpIngredient4)
+                    arrayListRecipe.add(pumpIngredient5)
+                    arrayListRecipe.add(pumpIngredient6)
+                    var drink:Drink = Drink(drink_name_String,arrayListRecipe)
+                    drinkList.add(drink)
                     menu_array_list.add(drink_name_String)
                 }
             }
@@ -198,7 +180,7 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
             // Now get its recipe then send it over Bluetooth
             var command: String = getRecipe(selectedDrink)
             bluetoothComm.startConnectionToBartender(this)
-            bluetoothComm.sendCommand(command)
+            bluetoothComm.sendCommand("a")
         }else {
             Snackbar.make(view, "No Drinks Created", Snackbar.LENGTH_LONG)
                 .setAction("Action", null)
@@ -298,7 +280,5 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
             fragment.setPumpConfigChangedListener(this)
         }
     }
-
-
 
 }
