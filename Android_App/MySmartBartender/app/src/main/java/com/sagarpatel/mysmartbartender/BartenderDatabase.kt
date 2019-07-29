@@ -20,7 +20,17 @@ class BartenderDatabase(context:Context): SQLiteOpenHelper(context,DATABASE_NAME
                 + INGREDIENT_6 + " Int"
                 + ")"
                 )
+        val CREATE_PUMP_TABLE = ("CREATE TABLE " + PUMP_TABLE_NAME + "("
+                + COLUMN_ID + " INTEGER PRIMARY KEY,"
+                + PUMP_1 + " TEXT,"
+                + PUMP_2 + " TEXT,"
+                + PUMP_3 + " TEXT,"
+                + PUMP_4 + " TEXT,"
+                + PUMP_5 + " TEXT,"
+                + PUMP_6 + " TEXT,"
+                )
         p0!!.execSQL(CREATE_DRINKS_TABLE)
+        p0!!.execSQL(CREATE_PUMP_TABLE)
     }
 
     override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
@@ -50,6 +60,7 @@ class BartenderDatabase(context:Context): SQLiteOpenHelper(context,DATABASE_NAME
     companion object{
         private const val DATABASE_NAME = "Bartender.db"
         private const val DATABASE_VERSION = 1
+        // Table 1
         val TABLE_NAME = "Drink_Recipe"
         val COLUMN_ID = "_id"
         val DRINK_NAME = "drink_name"
@@ -59,6 +70,29 @@ class BartenderDatabase(context:Context): SQLiteOpenHelper(context,DATABASE_NAME
         val INGREDIENT_4 = "Ingredient_4"
         val INGREDIENT_5 = "Ingredient_5"
         val INGREDIENT_6 = "Ingredient_6"
+        //Table 2
+        val PUMP_TABLE_NAME = "pump_configuration"
+        val PUMP_1 = "Pump_1"
+        val PUMP_2 = "Pump_2"
+        val PUMP_3 = "Pump_3"
+        val PUMP_4 = "Pump_4"
+        val PUMP_5 = "Pump_5"
+        val PUMP_6 = "Pump_6"
+    }
+}
+
+/**
+class pumpDatabase(context:Context): SQLiteOpenHelper(context,DATABASE_NAME,null,DATABASE_VERSION){
+    override fun onCreate(db: SQLiteDatabase?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    companion object{
+        private const val DATABASE_NAME
+    }
 }
+ **/

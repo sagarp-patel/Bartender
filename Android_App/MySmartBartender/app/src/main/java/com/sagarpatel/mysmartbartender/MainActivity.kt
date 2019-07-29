@@ -154,8 +154,8 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
     fun openMenu(){
         if(!isMenuOpen) {
             info_about_fab.animate().translationY(-getResources().getDimension(R.dimen.up_55))
-            pump_config_fab.animate().translationY(-getResources().getDimension(R.dimen.up_105))
-            add_drink_fab.animate().translationY(-getResources().getDimension(R.dimen.up_155))
+            pump_config_fab.animate().translationY(-getResources().getDimension(R.dimen.up_155))
+            add_drink_fab.animate().translationY(-getResources().getDimension(R.dimen.up_105))
             isMenuOpen = true
         }
     }
@@ -164,8 +164,8 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
     fun closeMenu(){
         if(isMenuOpen) {
             info_about_fab.animate().translationY(getResources().getDimension(R.dimen.up_55))
-            pump_config_fab.animate().translationY(getResources().getDimension(R.dimen.up_105))
-            add_drink_fab.animate().translationY(getResources().getDimension(R.dimen.up_155))
+            pump_config_fab.animate().translationY(getResources().getDimension(R.dimen.up_155))
+            add_drink_fab.animate().translationY(getResources().getDimension(R.dimen.up_105))
             isMenuOpen = false
         }
     }
@@ -206,7 +206,6 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
         fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragment_container,add_drink_frag)
         fragmentTransaction.commit()
-        //updatePumpConfig()
         closeMenu()
     }
 
@@ -224,6 +223,7 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
         fragmentTransaction.commit()
         closeMenu()
     }
+
 
     override fun getIngredientName(name: String, num:String) {
         if(name != "") {
@@ -280,5 +280,4 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
             fragment.setPumpConfigChangedListener(this)
         }
     }
-
 }
