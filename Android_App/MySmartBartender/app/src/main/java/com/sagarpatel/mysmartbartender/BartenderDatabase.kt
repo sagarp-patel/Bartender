@@ -27,7 +27,8 @@ class BartenderDatabase(context:Context): SQLiteOpenHelper(context,DATABASE_NAME
                 + PUMP_3 + " TEXT,"
                 + PUMP_4 + " TEXT,"
                 + PUMP_5 + " TEXT,"
-                + PUMP_6 + " TEXT,"
+                + PUMP_6 + " TEXT"
+                + ")"
                 )
         p0!!.execSQL(CREATE_DRINKS_TABLE)
         p0!!.execSQL(CREATE_PUMP_TABLE)

@@ -101,6 +101,7 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
         bluetoothComm = MyBluetoothService()
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
         bluetoothComm.pairedDevices()
+        bluetoothComm.startConnectionToBartender(this)
 
         // Database stuff
         val cursor = db.getAllDrinks()
@@ -125,6 +126,12 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
                     arrayListRecipe.add(pumpIngredient5)
                     arrayListRecipe.add(pumpIngredient6)
                     var drink:Drink = Drink(drink_name_String,arrayListRecipe)
+                    drink.pump_1 = pumpIngredient1.toInt()
+                    drink.pump_2 = pumpIngredient2.toInt()
+                    drink.pump_3 = pumpIngredient3.toInt()
+                    drink.pump_4 = pumpIngredient4.toInt()
+                    drink.pump_5 = pumpIngredient5.toInt()
+                    drink.pump_6 = pumpIngredient6.toInt()
                     drinkList.add(drink)
                     menu_array_list.add(drink_name_String)
                 }
@@ -180,7 +187,7 @@ class MainActivity() : AppCompatActivity(), Pump_Ingredient.Pump_Ingredient_List
             // Now get its recipe then send it over Bluetooth
             var command: String = getRecipe(selectedDrink)
             bluetoothComm.startConnectionToBartender(this)
-            bluetoothComm.sendCommand("a")
+            bluetoothComm.sendCommand(command)
         }else {
             Snackbar.make(view, "No Drinks Created", Snackbar.LENGTH_LONG)
                 .setAction("Action", null)

@@ -27,7 +27,7 @@ class MyBluetoothService(){
     companion object{
         var bluetoothAdapter: BluetoothAdapter? = null
         lateinit var address:String
-        val device_UUID: UUID = UUID.fromString("b95deb0c-a1d7-11e9-b9b5-ffba58186197") // Still Need to Add the UUID from Raspberry Pi
+        val device_UUID: UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")//"86eed14c-b256-11e9-b2e1-6746f2e9154") // Still Need to Add the UUID from Raspberry Pi
         var app_bluetooth_socket:BluetoothSocket?=null
         lateinit var connectionProgress:ProgressDialog
         var isConnectedToBartender:Boolean = false
