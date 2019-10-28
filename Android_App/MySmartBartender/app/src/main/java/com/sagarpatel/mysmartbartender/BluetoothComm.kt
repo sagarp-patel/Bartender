@@ -91,8 +91,7 @@ class MyBluetoothService(){
         init{
             this.context = context
         }
-
-
+        
         override fun onPreExecute() {
             super.onPreExecute()
             connectionProgress = ProgressDialog.show(context,"Connecting","please wait")
