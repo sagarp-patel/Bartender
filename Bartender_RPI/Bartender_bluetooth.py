@@ -1,4 +1,5 @@
 import bluetooth
+from Bartender import Drinks
 
 def getPump(recipeStr:str):
     recipe = []
@@ -20,7 +21,7 @@ LED=21
 #GPIO.setup(LED,GPIO.OUT)  #initialize GPIO21 (LED) as an output Pin
 #GPIO.output(LED,0)
 
-def listenForRecipe():
+def listenForRecipe(drink_queue):
     server_socket=bluetooth.BluetoothSocket( bluetooth.RFCOMM )
     port = 1
     server_socket.bind(("",port))
@@ -31,6 +32,8 @@ def listenForRecipe():
         data = client_socket.recv(1024)
         print("Received: %s" % data)
         recipe = getPump(data.decode("utf-8"))
+        drink = Drinks(recipe)
+        drink_queue.put(drink)
         print(recipe)
         if (data == "0"):    #if '0' is sent from the Android App, turn OFF the LED
              print ("GPIO 21 LOW, LED OFF")
