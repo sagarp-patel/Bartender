@@ -40,6 +40,14 @@ class Drinks:
 class Bartender:
     def __init__(self):
         print('Class in Development')
+    
+    def make(self,drink):
+        print('Function still in Developpment')
+        pumpThreads = []
+        for thread in pumpThreads:
+            thread.start()
+        for thread in pumpThreads:
+            thread.join()
         
 #Driver Program to run the code 
 def driverProgram():
@@ -48,6 +56,11 @@ def driverProgram():
     drink_queue = queue()
     bluetooth_thread = threading.thread(target = blth.listenForRecipe,  args= (drink_queue))
     bluetooth_thread.start()
+    i = 0
     while True:
+        i+=1
+        if i > 100:
+            break
         if len(drink_queue) > 0:
-            print(drink_queue.get())
+            drink = drink_queue.get()
+            bartender.make(drink)
