@@ -40,14 +40,33 @@ class Drinks:
 class Bartender:
     def __init__(self):
         print('Class in Development')
+        self.pump_pins = [ 17, 27, 22, 23, 24, 25 ]
+        self.flow_rate = 60.0/80.0
     
     def make(self,drink):
         print('Function still in Developpment')
         pumpThreads = []
+        ingredients = drink.ingredients
+        i = 0
+        for item in ingredients:
+            waitTime = item * self.flow_rate
+            if item == 0:
+                i+=1
+                continue
+            else:
+                pump_i = threading.thread(target = self.startPump, args=(self.pump_pins[i],waitTime))
+                pumpThreads.append(pump_i)
+        #Start each of the pumps in a different thread
         for thread in pumpThreads:
             thread.start()
+        # Wait for the threads to finish
         for thread in pumpThreads:
             thread.join()
+    
+    def startPump(self,pin,waitTime):
+        GPIO.output(pin,GPIO.LOW) # Start Pump
+        time.sleep(waitTime)  #Wait for it to finish
+        GPIO.output(pin,GPIO.HIGH) # Stop the Pump
         
 #Driver Program to run the code 
 def driverProgram():
