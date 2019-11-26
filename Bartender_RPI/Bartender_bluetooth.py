@@ -34,7 +34,7 @@ class Bartender_Bluetooth():
         client_socket.close()
         server_socket.close()
         
-    def getPump(self, recipeStr:str):
+    def getPump(self, recipeStr):
         recipe = []
         pumps = recipeStr.split("\n")
         for pump in pumps:

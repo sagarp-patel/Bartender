@@ -7,7 +7,7 @@ import json
 from threading import Thread
 import traceback
 import time
-from Bartender_bluetooth import Bartender_Bluetooth as blth
+from Bartender_bluetooth import Bartender_Bluetooth
 import queue
 '''
 '''
@@ -70,17 +70,18 @@ class Bartender:
         
 #Driver Program to run the code 
 def driverProgram():
+    blth = Bartender_Bluetooth()
     print('In Development')
     bartender = Bartender()
     drink_queue = queue.Queue(maxsize=20)
-    bluetooth_thread = Thread(target = blth.listenForRecipe,  args= (drink_queue))
+    bluetooth_thread = Thread(target = blth.listenForRecipe, args=(drink_queue,))
     bluetooth_thread.start()
     i = 0
     while True:
         i+=1
         if i > 100:
             break
-        if len(drink_queue) > 0:
+        if drink_queue.qsize() > 0:
             drink = drink_queue.get()
             bartender.make(drink)
 
