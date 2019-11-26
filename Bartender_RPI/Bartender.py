@@ -4,10 +4,10 @@ __author__ = "Sagar Patel"
 import sys
 import RPi.GPIO as GPIO
 import json
-import threading
+from threading import Thread
 import traceback
 import time
-import Bartender_bluetooth as blth
+from Bartender_bluetooth import Bartender_Bluetooth as blth
 import queue
 '''
 '''
@@ -54,7 +54,7 @@ class Bartender:
                 i+=1
                 continue
             else:
-                pump_i = threading.thread(target = self.startPump, args=(self.pump_pins[i],waitTime))
+                pump_i = Thread(target = self.startPump, args=(self.pump_pins[i],waitTime))
                 pumpThreads.append(pump_i)
         #Start each of the pumps in a different thread
         for thread in pumpThreads:
@@ -72,8 +72,8 @@ class Bartender:
 def driverProgram():
     print('In Development')
     bartender = Bartender()
-    drink_queue = queue()
-    bluetooth_thread = threading.thread(target = blth.listenForRecipe,  args= (drink_queue))
+    drink_queue = queue.Queue(maxsize=20)
+    bluetooth_thread = Thread(target = blth.listenForRecipe,  args= (drink_queue))
     bluetooth_thread.start()
     i = 0
     while True:
@@ -83,3 +83,5 @@ def driverProgram():
         if len(drink_queue) > 0:
             drink = drink_queue.get()
             bartender.make(drink)
+
+driverProgram()
