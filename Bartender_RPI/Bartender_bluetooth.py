@@ -1,5 +1,4 @@
 import bluetooth
-#from Bartender import Drinks
  
 #GPIO.setmode(GPIO.BCM)     #programming the GPIO by BCM pin numbers. (like PIN40 as GPIO21)
 #GPIO.setwarnings(False)
@@ -21,8 +20,8 @@ class Bartender_Bluetooth():
             data = client_socket.recv(1024)
             print("Received: %s" % data)
             recipe = self.getPump(data.decode("utf-8"))
-            drink = Drinks(recipe)
-            drink_queue.put(drink)
+            #drink = Drinks(recipe)
+            drink_queue.put(recipe)
             print(recipe)
             if (data == "0"):    #if '0' is sent from the Android App, turn OFF the LED
                 print ("GPIO 21 LOW, LED OFF")
